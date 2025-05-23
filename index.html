@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML/CSS/JS Live Preview & Converter</title>
+  <style>
+    :root {
+      --bg: #f0f0f0;
+      --text: #000;
+    }
+    body.dark-mode {
+      --bg: #1e1e1e;
+      --text: #f0f0f0;
+    }
+    body {
+      font-family: Arial;
+      margin: 2em;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      font-size: 1em;
+      margin-bottom: 10px;
+      background: #fff;
+      color: #000;
+    }
+    body.dark-mode textarea {
+      background: #333;
+      color: #f0f0f0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+      background: white;
+    }
+    .ad-slot {
+      display: none;
+      width: 100%;
+      height: 90px;
+      margin: 20px 0;
+      background-color: #e0e0e0;
+      text-align: center;
+      line-height: 90px;
+      font-size: 1.2em;
+      color: #555;
+    }
+    #darkToggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #555;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button id="darkToggle" onclick="toggleDarkMode()">🌙</button>
+  <h1>HTML/CSS/JS Live Preview & Download</h1>
+
+  <div class="ad-slot" id="ad-top">Top Ad Placeholder</div>
+
+  <h3>HTML</h3>
+  <textarea id="htmlInput" placeholder="Enter HTML code..."></textarea>
+  <button onclick="downloadFile('html')">Download HTML Only</button>
+  <button onclick="clearInput('htmlInput')">Clear HTML</button>
+
+  <h3>CSS</h3>
+  <textarea id="cssInput" placeholder="Enter CSS code..."></textarea>
+  <button onclick="downloadFile('css')">Download CSS Only</button>
+  <button onclick="clearInput('cssInput')">Clear CSS</button>
+
+  <h3>JavaScript</h3>
+  <textarea id="jsInput" placeholder="Enter JavaScript code..."></textarea>
+  <button onclick="downloadFile('js')">Download JS Only</button>
+  <button onclick="clearInput('jsInput')">Clear JS</button>
+
+  <button onclick="previewCode()">Preview</button>
+  <button onclick="downloadCombined()">Download Combined HTML</button>
+
+  <div class="ad-slot" id="ad-middle">Middle Ad Placeholder</div>
+
+  <iframe id="previewFrame"></iframe>
+
+  <div class="ad-slot" id="ad-bottom">Bottom Ad Placeholder</div>
+
+  <script>
+    function getFullHTML(html, css, js) {
+      return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='UTF-8'>
+  <style>${css}</style>
+</head>
+<body>
+  ${html}
+  <script>${js}<\/script>
+</body>
+</html>`;
+    }
+
+    function previewCode() {
+      const html = document.getElementById("htmlInput").value;
+      const css = document.getElementById("cssInput").value;
+      const js = document.getElementById("jsInput").value;
+      const fullHTML = getFullHTML(html, css, js);
+      const iframe = document.getElementById("previewFrame");
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      doc.open();
+      doc.write(fullHTML);
+      doc.close();
+    }
+
+    function downloadFile(type) {
+      let content = '', filename = '';
+      if (type === 'html') {
+        content = document.getElementById("htmlInput").value;
+        filename = 'index.html';
+      } else if (type === 'css') {
+        content = document.getElementById("cssInput").value;
+        filename = 'style.css';
+      } else if (type === 'js') {
+        content = document.getElementById("jsInput").value;
+        filename = 'script.js';
+      }
+      const blob = new Blob([content], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function downloadCombined() {
+      const html = document.getElementById("htmlInput").value;
+      const css = document.getElementById("cssInput").value;
+      const js = document.getElementById("jsInput").value;
+      const fullHTML = getFullHTML(html, css, js);
+      const blob = new Blob([fullHTML], { type: "text/html" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "project.html";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function clearInput(id) {
+      document.getElementById(id).value = '';
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    window.onload = () => {
+      document.querySelectorAll('.ad-slot').forEach(slot => {
+        slot.style.display = 'block';
+      });
+    }
+  </script>
+</body>
+</html>
