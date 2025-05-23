@@ -46,7 +46,7 @@
       background: white;
     }
     .ad-slot {
-      display: none;
+      display: block;
       width: 100%;
       height: 90px;
       margin: 20px 0;
@@ -55,6 +55,11 @@
       line-height: 90px;
       font-size: 1.2em;
       color: #555;
+    }
+    .ad-slot img {
+      max-width: 100%;
+      height: 90px;
+      object-fit: cover;
     }
     #darkToggle {
       position: fixed;
@@ -73,7 +78,11 @@
   <button id="darkToggle" onclick="toggleDarkMode()">🌙</button>
   <h1>HTML/CSS/JS Live Preview & Download</h1>
 
-  <div class="ad-slot" id="ad-top">Top Ad Placeholder</div>
+  <div class="ad-slot" id="ad-top">
+    <a href="https://playlistowl.com/#aff=bkscrly" target="_blank" rel="noopener noreferrer">
+      <img src="https://via.placeholder.com/728x90.png?text=Discover+PlaylistOwl+Now" alt="PlaylistOwl Ad" />
+    </a>
+  </div>
 
   <h3>HTML</h3>
   <textarea id="htmlInput" placeholder="Enter HTML code..."></textarea>
@@ -93,11 +102,19 @@
   <button onclick="previewCode()">Preview</button>
   <button onclick="downloadCombined()">Download Combined HTML</button>
 
-  <div class="ad-slot" id="ad-middle">Middle Ad Placeholder</div>
+  <div class="ad-slot" id="ad-middle">
+    <a href="https://playlistowl.com/#aff=bkscrly" target="_blank" rel="noopener noreferrer">
+      <img src="https://via.placeholder.com/728x90.png?text=Boost+Your+Playlist+Now" alt="PlaylistOwl Middle Ad" />
+    </a>
+  </div>
 
   <iframe id="previewFrame"></iframe>
 
-  <div class="ad-slot" id="ad-bottom">Bottom Ad Placeholder</div>
+  <div class="ad-slot" id="ad-bottom">
+    <a href="https://playlistowl.com/#aff=bkscrly" target="_blank" rel="noopener noreferrer">
+      <img src="https://via.placeholder.com/728x90.png?text=Get+PlaylistOwl+Today" alt="PlaylistOwl Bottom Ad" />
+    </a>
+  </div>
 
   <script>
     function getFullHTML(html, css, js) {
@@ -167,12 +184,6 @@
 
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
-    }
-
-    window.onload = () => {
-      document.querySelectorAll('.ad-slot').forEach(slot => {
-        slot.style.display = 'block';
-      });
     }
   </script>
 </body>
